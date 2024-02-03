@@ -1,0 +1,29 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: xtext.MigDsl
+Bundle-ManifestVersion: 2
+Bundle-Name: xtext.MigDsl
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: xtext.MigDsl; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: dsl,
+ org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+ org.eclipse.xtext.util,
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-ClassPath: .,
+ lib/ojdbc6_g.jar
+Export-Package: xtext.services,
+ xtext.serializer,
+ xtext.parser.antlr,
+ xtext,
+ xtext.parser.antlr.internal,
+ xtext.validation,
+ xtext.generator,
+ xtext.formatting2,
+ xtext.scoping
+Import-Package: org.apache.log4j,
+ org.eclipse.core.resources

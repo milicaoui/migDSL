@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/dsl/src" modelPluginID="dsl" modelName="Dsl" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>dsl.ecore</foreignModel>
+  <genPackages prefix="Dsl" disposableProviderFactory="true" ecorePackage="dsl.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="dsl.ecore#//FieldType">
+      <genEnumLiterals ecoreEnumLiteral="dsl.ecore#//FieldType/Basic"/>
+      <genEnumLiterals ecoreEnumLiteral="dsl.ecore#//FieldType/ListField"/>
+      <genEnumLiterals ecoreEnumLiteral="dsl.ecore#//FieldType/ObjectField"/>
+    </genEnums>
+    <genClasses ecoreClass="dsl.ecore#//Migration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dsl.ecore#//Migration/relationaldb"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dsl.ecore#//Migration/mongodb"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dsl.ecore#//Migration/options"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dsl.ecore#//Migration/mappings"/>
+    </genClasses>
+    <genClasses ecoreClass="dsl.ecore#//MongoDb">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dsl.ecore#//MongoDb/db"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dsl.ecore#//MongoDb/host"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dsl.ecore#//MongoDb/port"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dsl.ecore#//MongoDb/collections"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dsl.ecore#//MongoDb/username"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dsl.ecore#//MongoDb/password"/>
+    </genClasses>
+    <genClasses ecoreClass="dsl.ecore#//RelationalDb">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dsl.ecore#//RelationalDb/db"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dsl.ecore#//RelationalDb/host"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dsl.ecore#//RelationalDb/tables"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dsl.ecore#//RelationalDb/port"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dsl.ecore#//RelationalDb/username"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dsl.ecore#//RelationalDb/password"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dsl.ecore#//RelationalDb/constraints"/>
+    </genClasses>
+    <genClasses ecoreClass="dsl.ecore#//MngCollection">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dsl.ecore#//MngCollection/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dsl.ecore#//MngCollection/fields"/>
+    </genClasses>
+    <genClasses ecoreClass="dsl.ecore#//Table">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dsl.ecore#//Table/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dsl.ecore#//Table/columns"/>
+    </genClasses>
+    <genClasses ecoreClass="dsl.ecore#//Column">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dsl.ecore#//Column/name"/>
+    </genClasses>
+    <genClasses ecoreClass="dsl.ecore#//Field">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dsl.ecore#//Field/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dsl.ecore#//Field/fields"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dsl.ecore#//Field/type"/>
+    </genClasses>
+    <genClasses ecoreClass="dsl.ecore#//Mapping">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dsl.ecore#//Mapping/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dsl.ecore#//Mapping/output"/>
+    </genClasses>
+    <genClasses ecoreClass="dsl.ecore#//Unique">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dsl.ecore#//Unique/uniqueColumns"/>
+    </genClasses>
+    <genClasses ecoreClass="dsl.ecore#//NotNull">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dsl.ecore#//NotNull/column"/>
+    </genClasses>
+    <genClasses ecoreClass="dsl.ecore#//PrimaryKey">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dsl.ecore#//PrimaryKey/keyColumns"/>
+    </genClasses>
+    <genClasses ecoreClass="dsl.ecore#//Constraint">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dsl.ecore#//Constraint/name"/>
+    </genClasses>
+    <genClasses ecoreClass="dsl.ecore#//Options">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dsl.ecore#//Options/DataTypeMigration"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dsl.ecore#//Options/AllowAdditionalFields"/>
+    </genClasses>
+    <genClasses ecoreClass="dsl.ecore#//ForeignKey">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dsl.ecore#//ForeignKey/referenced"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dsl.ecore#//ForeignKey/referencing"/>
+    </genClasses>
+    <genClasses ecoreClass="dsl.ecore#//DirectMapping">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dsl.ecore#//DirectMapping/column"/>
+    </genClasses>
+    <genClasses ecoreClass="dsl.ecore#//NestingList">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dsl.ecore#//NestingList/foreignkey"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dsl.ecore#//NestingList/columns"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dsl.ecore#//NestingList/fields"/>
+    </genClasses>
+    <genClasses ecoreClass="dsl.ecore#//NestingObject">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dsl.ecore#//NestingObject/foreignkey"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dsl.ecore#//NestingObject/columns"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dsl.ecore#//NestingObject/fields"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

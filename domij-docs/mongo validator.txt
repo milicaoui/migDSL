@@ -1,0 +1,90 @@
+mongodb+srv://vumilicaamm:<password>@cluster0.mjg4wst.mongodb.net/
+mongodb+srv://vumilicaamm:domij@cluster0.mjg4wst.mongodb.net/&authSource=admin
+
+atlas access: https://cloud.mongodb.com/v2/64adbf196c670d0e0a1383a3#/security/database/users
+
+falj sa validatorom:
+
+from pymongo import MongoClient
+
+# Assuming you have a MongoDB server running locally
+client = MongoClient('mongodb+srv://vumilicaamm:domij@cluster0.mjg4wst.mongodb.net/&authSource=admin')
+db = client['mydatabase']
+
+# Define the schema as a JSON Schema
+schema = {
+    '$jsonSchema': {
+        'type': 'object',
+        'properties': {
+            'name': {'type': 'string'},
+            'age': {'minimum': 0},
+            'email': {'type': 'string'},
+            'country': {}
+        },
+        'required': ['name', 'age', 'email']
+    }
+}
+
+# Create the collection and apply the validator
+#db.create_collection('users')
+
+db.command("collMod", "users",validator=schema)
+
+valid_doc = {
+    'name': 'John Doe',
+    'age': 30,
+    'email': 'john@example.com',
+    'country': 89
+}
+collection = db["users"]
+collection.insert_one(valid_doc)
+
+
+**AKO NE ZELIMO DA BUDU DOZVOLJENA POLJA OSIM OVIH SPECIFICIRANIH:
+
+schema = {
+    '$jsonSchema': {
+        'type': 'object',
+        'properties': {
+            'name': {'type': 'string'},
+            'age': {'minimum': 0},
+            'email': {'type': 'string'},
+            'country': {'type': 'string'}
+        },
+        'required': ['name', 'age', 'email'],
+        'additionalProperties': False
+    }
+}
+
+from pymongo import MongoClient
+
+# Connect to the MongoDB server
+client = MongoClient('<mongodb_connection_string>')
+db = client['your_database_name']
+
+# Define the validation rules
+validator = {
+    "$jsonSchema": {
+        "bsonType": "object",
+        "required": ["person"],
+        "properties": {
+            "person": {
+                "bsonType": "object",
+                "required": ["name", "surname"],
+                "properties": {
+                    "name": {
+                        "bsonType": "string",
+                        "description": "Name of the person"
+                    },
+                    "surname": {
+                        "bsonType": "string",
+                        "description": "Surname of the person"
+                    }
+                }
+            }
+        }
+    }
+}
+
+# Create the "users" collection with validation
+db.create_collection("users", validator=validator)

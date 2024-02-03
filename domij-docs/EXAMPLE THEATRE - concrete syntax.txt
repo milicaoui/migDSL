@@ -1,0 +1,183 @@
+mappings{
+	
+	{
+		output: "actors.name"
+		input: "ACTOR.NAME_AC"
+	}
+	{
+		output: "actors.status"
+		input: "ACTOR.STATUS_AC"
+	}
+	{
+		NESTING_OBJECT
+		output: "actors.theatre"
+		inputs: ACTOR_THEATRE_FK ("THEATRE.NAME_TH","THEATRE.WEBSITE_TH","THEATRE.ADDRESS_TH")
+		AS ( "actors.theatre.name" , "actors.theatre.website" , "actors.theatre.address" )
+	}
+	{
+		NESTING_LIST
+		output: "actors.roles"
+		inputs: ASSIGNMENT_ROLE_FK ("ROLE.NAME_RO","ROLE.TYPE_RO","ROLE.ID_RO")
+		AS ( "actors.roles.role_name" , "actors.roles.role_type" , "actors.roles.role_id" )
+	 }
+	 {
+	 	output: "actors.salary"
+	 	input: "ACTOR.SALARY_AC"
+	 }
+	 
+	 	 {
+	 	output: "theaters.name"
+	 	input: "THEATRE.NAME_TH"
+	 }
+	 {
+	 	output: "theaters.address"
+	 	input: "THEATRE.ADDRESS_TH"
+	 }
+	 {
+	 	output: "theaters.website"
+	 	input: "THEATRE.WEBSITE_TH"
+	 }
+	 {
+	 	NESTING_OBJECT
+	 	output: "theaters.place"
+	 	inputs: THEATRE_PLACE_FK ("PLACE.ID_PL","PLACE.NAME_PL","PLACE.COUNTRY_ID_CN")
+	 	AS ( "theaters.place.place_id" , "theaters.place.place_name" , "theaters.place.country" )
+	 }
+	 
+	 {
+	 	output: "scenes._id"
+	 	input: "SCENE.ID_SC"
+	 }	 
+	 {
+	 	output: "scenes.name"
+	 	input: "SCENE.NAME_SC"
+	 }
+	 {
+	 	NESTING_OBJECT
+	 	output: "scenes.theatre"
+	 	inputs: SCENE_THEATRE_FK ("THEATRE.NAME_TH", "THEATRE.WEBSITE_TH")
+	 	AS ( "scenes.theatre.theatre_name" , "scenes.theatre.theatre_website" )
+	 }
+	 {
+	 	NESTING_LIST
+	 	output: "scenes.showings"
+	 	inputs: SHOWING_SCENE_FK ("SHOWING.DATE_SH","SHOWING.TIME_SH","SHOWING.NUMOFSPEC_SH","SHOWING.PLAY_ID_PL")
+	    AS ( "scenes.showings.date" , "scenes.showings.time" , "scenes.showings.spectators" , "scenes.showings.play" )
+	 }
+	 
+	 {
+	 	output: "technicians.aptype"
+	 	input: "TECHNICIAN.APTYPE_TC"
+	 }
+	 {
+	 	NESTING_OBJECT
+	 	output: "technicians.tech_info"
+	 	inputs: TECHNICIAN_EMPLOYEE_FK ("EMPLOYEE.NAME_EM", "EMPLOYEE.SURNAME_EM","EMPLOYEE.SALARY_EM")
+	 AS ( "technicians.tech_info.name" , "technicians.tech_info.surname" , "technicians.tech_info.salary" ) }
+	 
+
+	
+} -
+- source -
+- xe / localhost / "1521" / milica / milica -
+- ACTOR ( ID_AC , NAME_AC , DOB_AC , STATUS_AC , SALARY_AC , BONUS_AC , THEATRE_ID_TH ) -
+- ASSIGNMENT ( ID_AS , HONORAR_AS , STARTDATE_AS , ENDDATE_AS , ACTOR_ID_AC , ROLE_ID_RO ) -
+- COUNTRY ( ID_CN , NAME_CN ) -
+- DEPARTMENT ( ID_DPT , NAME_DP , THEATRE_ID_TH ) -
+- EMPLOYEE ( ID_EM , NAME_EM , SURNAME_EM , SALARY_EM , TYPE_EM , DEPARTMENT_ID_DPT ) -
+- ROLE ( ID_RO , NAME_RO , GENDER_RO , TYPE_RO , PLAY_ID_PL ) -
+- PLACE ( ID_PL , NAME_PL , COUNTRY_ID_CN ) -
+- PLAY ( ID_PL , NAME_PL , DURATION_PL , YEAR_PL ) -
+- SCENE ( ID_SC , NAME_SC , NUMOFSEATS_SC , THEATRE_ID_TH ) -
+- SHOWING ( ORDNUM_SH , DATE_SH , TIME_SH , NUMOFSPEC_SH , PLAY_ID_PL , SCENE_ID_SC ) -
+- TECHNICIAN ( ID_EM , APTYPE_TC ) -
+- THEATRE ( ID_TH , NAME_TH , ADDRESS_TH , WEBSITE_TH , PLACE_ID_PL ) -
+- THEATREMANAGER ( ID_EM , PROFQUAL_TM ) -
+- constraints -
+- PK: SHOWING_PK keyColumns ( "SHOWING.ORDNUM_SH" ) -
+- PK: THEATRE_PK keyColumns ( "THEATRE.ID_TH" ) -
+- PK: DEPARTMENT_PK keyColumns ( "DEPARTMENT.ID_DPT" ) -
+- PK: TECHNICIAN_PK keyColumns ( "TECHNICIAN.ID_EM" ) -
+- PK: ROLE_PK keyColumns ( "ROLE.ID_RO" ) -
+- PK: PLACE_PK keyColumns ( "PLACE.ID_PL" ) -
+- PK: SCENE_PK keyColumns ( "SCENE.ID_SC" ) -
+- PK: ACTOR_PK keyColumns ( "ACTOR.ID_AC" ) -
+- PK: ASSIGNMENT_PK keyColumns ( "ASSIGNMENT.ID_AS" ) -
+- PK: EMPLOYEE_PK keyColumns ( "EMPLOYEE.ID_EM" ) -
+- PK: PLAY_PK keyColumns ( "PLAY.ID_PL" ) -
+- PK: COUNTRY_PK keyColumns ( "COUNTRY.ID_CN" ) -
+- PK: THEATREMANAGER_PK keyColumns ( "THEATREMANAGER.ID_EM" ) -
+- NotNull: "ACTOR.ID_AC-NN" column "ACTOR.ID_AC" -
+- NotNull: "ACTOR.NAME_AC-NN" column "ACTOR.NAME_AC" -
+- NotNull: "ACTOR.SALARY_AC-NN" column "ACTOR.SALARY_AC" -
+- NotNull: "ASSIGNMENT.ID_AS-NN" column "ASSIGNMENT.ID_AS" -
+- NotNull: "ASSIGNMENT.HONORAR_AS-NN" column "ASSIGNMENT.HONORAR_AS" -
+- NotNull: "ASSIGNMENT.STARTDATE_AS-NN" column "ASSIGNMENT.STARTDATE_AS" -
+- NotNull: "ASSIGNMENT.ENDDATE_AS-NN" column "ASSIGNMENT.ENDDATE_AS" -
+- NotNull: "ASSIGNMENT.ACTOR_ID_AC-NN" column "ASSIGNMENT.ACTOR_ID_AC" -
+- NotNull: "ASSIGNMENT.ROLE_ID_RO-NN" column "ASSIGNMENT.ROLE_ID_RO" -
+- NotNull: "COUNTRY.ID_CN-NN" column "COUNTRY.ID_CN" -
+- NotNull: "COUNTRY.NAME_CN-NN" column "COUNTRY.NAME_CN" -
+- NotNull: "DEPARTMENT.ID_DPT-NN" column "DEPARTMENT.ID_DPT" -
+- NotNull: "DEPARTMENT.NAME_DP-NN" column "DEPARTMENT.NAME_DP" -
+- NotNull: "DEPARTMENT.THEATRE_ID_TH-NN" column "DEPARTMENT.THEATRE_ID_TH" -
+- NotNull: "EMPLOYEE.ID_EM-NN" column "EMPLOYEE.ID_EM" -
+- NotNull: "EMPLOYEE.NAME_EM-NN" column "EMPLOYEE.NAME_EM" -
+- NotNull: "EMPLOYEE.SURNAME_EM-NN" column "EMPLOYEE.SURNAME_EM" -
+- NotNull: "EMPLOYEE.SALARY_EM-NN" column "EMPLOYEE.SALARY_EM" -
+- NotNull: "EMPLOYEE.TYPE_EM-NN" column "EMPLOYEE.TYPE_EM" -
+- NotNull: "EMPLOYEE.DEPARTMENT_ID_DPT-NN" column "EMPLOYEE.DEPARTMENT_ID_DPT" -
+- NotNull: "ROLE.ID_RO-NN" column "ROLE.ID_RO" -
+- NotNull: "ROLE.NAME_RO-NN" column "ROLE.NAME_RO" -
+- NotNull: "ROLE.GENDER_RO-NN" column "ROLE.GENDER_RO" -
+- NotNull: "ROLE.TYPE_RO-NN" column "ROLE.TYPE_RO" -
+- NotNull: "ROLE.PLAY_ID_PL-NN" column "ROLE.PLAY_ID_PL" -
+- NotNull: "PLACE.ID_PL-NN" column "PLACE.ID_PL" -
+- NotNull: "PLACE.NAME_PL-NN" column "PLACE.NAME_PL" -
+- NotNull: "PLACE.COUNTRY_ID_CN-NN" column "PLACE.COUNTRY_ID_CN" -
+- NotNull: "PLAY.ID_PL-NN" column "PLAY.ID_PL" -
+- NotNull: "PLAY.NAME_PL-NN" column "PLAY.NAME_PL" -
+- NotNull: "PLAY.DURATION_PL-NN" column "PLAY.DURATION_PL" -
+- NotNull: "PLAY.YEAR_PL-NN" column "PLAY.YEAR_PL" -
+- NotNull: "SCENE.ID_SC-NN" column "SCENE.ID_SC" -
+- NotNull: "SCENE.NAME_SC-NN" column "SCENE.NAME_SC" -
+- NotNull: "SCENE.NUMOFSEATS_SC-NN" column "SCENE.NUMOFSEATS_SC" -
+- NotNull: "SCENE.THEATRE_ID_TH-NN" column "SCENE.THEATRE_ID_TH" -
+- NotNull: "SHOWING.ORDNUM_SH-NN" column "SHOWING.ORDNUM_SH" -
+- NotNull: "SHOWING.DATE_SH-NN" column "SHOWING.DATE_SH" -
+- NotNull: "SHOWING.TIME_SH-NN" column "SHOWING.TIME_SH" -
+- NotNull: "SHOWING.NUMOFSPEC_SH-NN" column "SHOWING.NUMOFSPEC_SH" -
+- NotNull: "SHOWING.PLAY_ID_PL-NN" column "SHOWING.PLAY_ID_PL" -
+- NotNull: "SHOWING.SCENE_ID_SC-NN" column "SHOWING.SCENE_ID_SC" -
+- NotNull: "TECHNICIAN.ID_EM-NN" column "TECHNICIAN.ID_EM" -
+- NotNull: "TECHNICIAN.APTYPE_TC-NN" column "TECHNICIAN.APTYPE_TC" -
+- NotNull: "THEATRE.ID_TH-NN" column "THEATRE.ID_TH" -
+- NotNull: "THEATRE.NAME_TH-NN" column "THEATRE.NAME_TH" -
+- NotNull: "THEATRE.ADDRESS_TH-NN" column "THEATRE.ADDRESS_TH" -
+- NotNull: "THEATRE.PLACE_ID_PL-NN" column "THEATRE.PLACE_ID_PL" -
+- NotNull: "THEATREMANAGER.ID_EM-NN" column "THEATREMANAGER.ID_EM" -
+- NotNull: "THEATREMANAGER.PROFQUAL_TM-NN" column "THEATREMANAGER.PROFQUAL_TM" -
+- ACTOR_THEATRE_FK "ACTOR.THEATRE_ID_TH" REFERENCES "THEATRE.ID_TH" -
+- DEPARTMENT_THEATRE_FK "DEPARTMENT.THEATRE_ID_TH" REFERENCES "THEATRE.ID_TH" -
+- ASSIGNMENT_ACTOR_FK "ASSIGNMENT.ACTOR_ID_AC" REFERENCES "ACTOR.ID_AC" -
+- ASSIGNMENT_ROLE_FK "ASSIGNMENT.ROLE_ID_RO" REFERENCES "ROLE.ID_RO" -
+- SCENE_THEATRE_FK "SCENE.THEATRE_ID_TH" REFERENCES "THEATRE.ID_TH" -
+- SHOWING_SCENE_FK "SHOWING.SCENE_ID_SC" REFERENCES "SCENE.ID_SC" -
+- TECHNICIAN_EMPLOYEE_FK "TECHNICIAN.ID_EM" REFERENCES "EMPLOYEE.ID_EM" -
+- THEATRE_PLACE_FK "THEATRE.PLACE_ID_PL" REFERENCES "PLACE.ID_PL" -
+- THEATREMANAGER_EMPLOYEE_FK "THEATREMANAGER.ID_EM" REFERENCES "EMPLOYEE.ID_EM" -
+- EMPLOYEE_DEPARTMENT_FK "EMPLOYEE.DEPARTMENT_ID_DPT" REFERENCES "DEPARTMENT.ID_DPT" -
+- SHOWING_PLAY_FK "SHOWING.PLAY_ID_PL" REFERENCES "PLAY.ID_PL" -
+- PLACE_COUNTRY_FK "PLACE.COUNTRY_ID_CN" REFERENCES "COUNTRY.ID_CN" -
+- ROLE_PLAY_FK "ROLE.PLAY_ID_PL" REFERENCES "PLAY.ID_PL" -
+- target -
+- domij / "cluster0.mjg4wst" / "" / vumilicaamm / domij -
+- actors { 
+	name , status , theatre { ObjectField name , ObjectField website , ObjectField address } , 
+	roles { ListField role_name , ListField role_type , ListField role_id }, salary 
+} -
+- scenes { "_id", name , theatre { ObjectField theatre_name , ObjectField theatre_website } , 
+	showings { ListField date , ListField time , ListField spectators, ListField play }
+} -
+- theaters { name , address , website , place { ObjectField place_id , ObjectField place_name , ObjectField country } } -
+- technicians { aptype ,tech_info { ObjectField name , ObjectField surname , ObjectField salary } }

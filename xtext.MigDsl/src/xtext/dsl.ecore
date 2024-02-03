@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="dsl" nsURI="http://www.example.org/dsl" nsPrefix="dsl">
+  <eAnnotations source="http://www.eclipse.org/OCL/Import">
+    <details key="ecore" value="http://www.eclipse.org/emf/2002/Ecore"/>
+  </eAnnotations>
+  <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+    <details key="invocationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="settingDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="validationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+  </eAnnotations>
+  <eClassifiers xsi:type="ecore:EClass" name="Migration">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="relationaldb" eType="#//RelationalDb"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mongodb" eType="#//MongoDb"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mappings" upperBound="-1"
+        eType="#//Mapping" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="options" eType="#//Options"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MongoDb">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="uniqueCollectionNames"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="uniqueCollectionNames" value="Tuple {&#xA;&#x9;message : String = 'Collection names inside MongoDb must be unique',&#xA;&#x9;status : Boolean = &#xA;&#x9;&#x9; self.collections-> collect(name) -> asSet() -> size() = self.collections -> size()&#xA;}.status"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="db" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="host" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="port" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="collections" upperBound="-1"
+        eType="#//MngCollection" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="username" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="password" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RelationalDb">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="db" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="host" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="tables" upperBound="-1"
+        eType="#//Table" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="port" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="username" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="password" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="constraints" upperBound="-1"
+        eType="#//Constraint" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MngCollection">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="uniqueFieldNames"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="uniqueFieldNames" value="Tuple {&#xA;&#x9;message : String = 'Field names inside document must be unique',&#xA;&#x9;status : Boolean = &#xA;&#x9;&#x9;&#x9;self.fields->forAll(c1, c2 | c1 &lt;> c2 implies c1.name &lt;> c2.name)&#xA;}.status"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="fields" upperBound="-1"
+        eType="#//Field" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Table">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="columns" upperBound="-1"
+        eType="#//Column" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Column">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Field">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="fields" upperBound="-1"
+        eType="#//Field" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//FieldType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Mapping" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="output" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="FieldType">
+    <eLiterals name="Basic" value="5"/>
+    <eLiterals name="ListField" value="6"/>
+    <eLiterals name="ObjectField" value="7"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Unique" eSuperTypes="#//Constraint">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="uniqueColumns" lowerBound="1"
+        upperBound="-1" eType="#//Column"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NotNull" eSuperTypes="#//Constraint">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="column" lowerBound="1"
+        eType="#//Column"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PrimaryKey" eSuperTypes="#//Constraint">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="keyColumns" lowerBound="1"
+        upperBound="-1" eType="#//Column"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Constraint" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Options">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="DataTypeMigration" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="False"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="AllowAdditionalFields"
+        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="False"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ForeignKey" eSuperTypes="#//Constraint">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referencing" lowerBound="1"
+        upperBound="-1" eType="#//Column"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="refrenced" lowerBound="1"
+        upperBound="-1" eType="#//Column"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DirectMapping" eSuperTypes="#//Mapping">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="column" lowerBound="1"
+        eType="#//Column"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NestingList" eSuperTypes="#//Mapping">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="foreignkey" lowerBound="1"
+        eType="#//ForeignKey"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="columns" upperBound="-1"
+        eType="#//Column"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="fields" upperBound="-1"
+        eType="#//Field"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NestingObject" eSuperTypes="#//Mapping">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="foreignkey" lowerBound="1"
+        eType="#//ForeignKey"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="columns" upperBound="-1"
+        eType="#//Column"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="fields" upperBound="-1"
+        eType="#//Field"/>
+  </eClassifiers>
+</ecore:EPackage>

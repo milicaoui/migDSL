@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dsl:Migration
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:dsl="http://www.example.org/dsl"
+    xsi:schemaLocation="http://www.example.org/dsl dsl.ecore">
+  <relationaldb
+      db="t"
+      host="t"
+      port="t"
+      username="t"
+      password="t">
+    <tables
+        name="RADNIK">
+      <columns
+          name="MBR"/>
+      <columns
+          name="IME"/>
+    </tables>
+    <tables
+        name="PROJEKAT">
+      <columns
+          name="SPR"/>
+      <columns
+          name="NAP"/>
+    </tables>
+    <tables
+        name="RADPROJ">
+      <columns
+          name="SPR_"/>
+      <columns
+          name="MBR_"/>
+    </tables>
+    <constraints
+        xsi:type="dsl:ForeignKey"
+        name="mbr_fk"
+        referenced="//@relationaldb/@tables.0/@columns.0"
+        referencing="//@relationaldb/@tables.2/@columns.1"/>
+    <constraints
+        xsi:type="dsl:ForeignKey"
+        name="spr_fk"
+        referenced="//@relationaldb/@tables.1/@columns.0"
+        referencing="//@relationaldb/@tables.2/@columns.0"/>
+  </relationaldb>
+  <mongodb db="t"
+      host="t"
+      port="t"
+      username="z"
+      password="t"/>
+  <options/>
+  <mappings
+      xsi:type="dsl:NestingList"
+      name="nesting_mapp"
+      output="proje ktira.dnici"
+      foreignkey="//@relationaldb/@constraints.0"
+      columns="//@relationaldb/@tables.2/@columns.0 //@relationaldb/@tables.2/@columns.1"/>
+</dsl:Migration>
